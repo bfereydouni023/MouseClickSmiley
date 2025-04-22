@@ -42,15 +42,23 @@ class MouseSmiley extends Phaser.Scene {
         this.input.on('pointerdown',(pointer) => {
             const x = pointer.x;
             const y = pointer.y;
-
-            this.bodyX = x;
-            this.bodyY = y;
-            this.smileX = this.bodyX;
-            this.smileY = this.bodyY + 20;
-
-            my.sprite.body.setPosition(this.bodyX, this.bodyY);
-        my.sprite.smile.setPosition(this.smileX, this.smileY);
-        my.sprite.dimple.setPosition(this.smileX, this.smileY);
+        
+            // Create body
+            const body = this.add.sprite(x, y, "yellowBody");
+        
+            // Create smile and dimple at offset
+            const smile = this.add.sprite(x, y + 20, "smile");
+            const dimple = this.add.sprite(x, y + 20, "smileDimple");
+            dimple.visible = false; // show smile by default
+        
+            // Store them as a group
+            const smileyGroup = {
+                body: body,
+                smile: smile,
+                dimple: dimple
+            };
+        
+            this.smileyList.push(smileyGroup);
         });
         
          document.getElementById('description').innerHTML = '<h2>mouseSmiley.js</h2>'
